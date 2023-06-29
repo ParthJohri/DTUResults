@@ -13,7 +13,7 @@ This script scrapes the results from the DTU (Delhi Technological University) Re
 - [License](#license)
 
 ## Screenshot
-![Mail Sent When New Results Arrived](example.png)
+![Mail Sent When New Results Arrived](Example.png)
 
 ## Prerequisites
 
