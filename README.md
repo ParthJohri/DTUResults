@@ -1,6 +1,6 @@
 # DTU Results 
 
-This script scrapes the results from the DTU (Delhi Technological University) [Results](http://exam.dtu.ac.in/result.htm) website and sends notifications to the user via email using the Amazon SES (Simple Email Service) whenever a new set of results is available.
+This script scrapes the results from the **DTU (Delhi Technological University) [Results](http://exam.dtu.ac.in/result.htm) website** and sends notifications to the user via email using the **Amazon SES (Simple Email Service)** whenever a new set of results is available.
 
 ## Table of Contents
 
