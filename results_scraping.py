@@ -1,14 +1,14 @@
 from bs4 import BeautifulSoup
 import requests
-import re
 import time
 import boto3
 import os
 from dotenv import load_dotenv
+
 load_dotenv()
 
 def scrapingResults():
-    url = "http://exam.dtu.ac.in/result.htm"  # Replace with the actual URL of the webpage
+    url = "http://exam.dtu.ac.in/result.htm"  
     response = requests.get(url)
     soup = BeautifulSoup(response.text, 'html.parser')
     td_element = soup.find('td', class_='back')
@@ -16,13 +16,19 @@ def scrapingResults():
         table_element = td_element.find('table')
         table_rows = table_element.find_all('tr')
         third_row = table_rows[2]
-        row_contents = []
+        results = []
+        resultFinal = f"<b>New Results Announced, Check <a href='http://exam.dtu.ac.in/' style='text-decoration: none; font-weight: bold; color: black;'>DTU Results</a></b><br>"
         for td_element in third_row.find_all('td'):
-            content = td_element.text.strip()
-            # Remove redundant spaces using regular expression
-            content = re.sub('\s+', ' ', content)
-            row_contents.append(content)
-        return row_contents
+            font_tag = td_element.find('font')
+            main_text = None  
+            for item in font_tag.find_all('a'):
+                if item.previous_sibling:  
+                    main_text = item.previous_sibling.strip(':').strip()  
+                link = item.get('href')
+                results.append((main_text, item.text.strip(), link))
+        for result in results:
+            resultFinal += f"<a href='http://exam.dtu.ac.in/{result[2]}' style='text-decoration: none; font-weight: bold; color: #0070C0;'><b>{result[0]} {result[1]}</b>\n</a><br>"
+        return resultFinal
     else:
         print("Table with class 'back' not found.")
         return None
@@ -41,7 +47,7 @@ def send_email(sender, recipient, subject, message):
                 'Data': subject
             },
             'Body': {
-                'Text': {
+                'Html': {
                     'Data': message
                 }
             }
@@ -49,8 +55,8 @@ def send_email(sender, recipient, subject, message):
     )
     print(f"Email sent. MessageId: {response['MessageId']}")
 
-sender_email= os.environ['SENDMAIL']
 
+sender_email = os.environ['SENDMAIL']
 recipient_email = os.environ['RECEIVEMAIL']
 
 previous_content = None
@@ -60,10 +66,10 @@ while True:
 
     if current_content is not None:
         if current_content != previous_content:
-            message = '\n'.join(current_content)
+            message = current_content
 
             # Send the email via Amazon SES
-            send_email(sender_email, recipient_email, 'Scraped Results', message)
+            send_email(sender_email, recipient_email, 'DTU Results', message)
 
             previous_content = current_content
 
