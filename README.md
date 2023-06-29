@@ -4,12 +4,16 @@ This script scrapes the results from the DTU (Delhi Technological University) Re
 
 ## Table of Contents
 
+- [Screenshot](#screenshot)
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
 - [Configuration](#configuration)
 - [Usage](#usage)
 - [Contributing](#contributing)
 - [License](#license)
+
+## Screenshot
+![Mail Sent When New Results Arrived](example.png)
 
 ## Prerequisites
 
