@@ -60,7 +60,7 @@ Before using this script, ensure that you have the following prerequisites insta
 To run the scraper and receive email notifications for new results, execute the following command:
 
 ```bash
-python scraper.py
+python3 results_scraping.py
 ```
 
 The script will periodically check for new results on the DTU Results website and send email notifications whenever a new set of results is available.
